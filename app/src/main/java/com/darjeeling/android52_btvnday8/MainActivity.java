@@ -1,5 +1,9 @@
 package com.darjeeling.android52_btvnday8;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -34,11 +38,24 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, Activity_add.class);
-                startActivity(intent);
+                startAddResultLauncher.launch(intent);
+
             }
         });
 
     }
+
+    ActivityResultLauncher<Intent> startAddResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+        @Override
+        public void onActivityResult(ActivityResult result) {
+            if (result.getResultCode() == RESULT_OK){
+                mListProduct = null;
+                mListProduct = new ArrayList<>();
+                mListProduct.addAll(mSqliteHelper.getListProduct());
+                mProductAdapter.updateData(mListProduct);
+            }
+        }
+    });
 
     private void initView() {
 

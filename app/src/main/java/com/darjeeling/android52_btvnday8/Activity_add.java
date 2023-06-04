@@ -1,15 +1,12 @@
 package com.darjeeling.android52_btvnday8;
 
-import androidx.annotation.LongDef;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -25,21 +22,21 @@ public class Activity_add extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
-        initdata();
+        initData();
 
         btnaccept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Intent intent = new Intent(Activity_add.this,MainActivity.class);
-                startActivity(intent);
+                insertData();
+                setResult(RESULT_OK);
+                finish();
                 Log.d(TAG, "onClick: Add Thanh Cong");
             }
         });
     }
 
 
-    private void insertdata() {
+    private void insertData() {
         mSqliteHelper = new SqliteHelper(Activity_add.this);
         Product product = new Product();
         product.setTitle(txtName.getText().toString());
@@ -53,10 +50,9 @@ public class Activity_add extends AppCompatActivity {
         product.setThumbnail(txtThumbnail.getText().toString());
         product.setImages(txtImage.getText().toString());
         mSqliteHelper.insertNewProduct(product);
-
     }
 
-    private void initdata() {
+    private void initData() {
         btnaccept = findViewById(R.id.btnAccept);
         txtName = findViewById(R.id.txtName);
         txtDes = findViewById(R.id.txtDes);

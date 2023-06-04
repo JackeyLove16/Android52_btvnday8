@@ -31,6 +31,11 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         this.mCallback = callback;
     }
 
+    public void updateData(ArrayList<Product> listData){
+        this.mListData = listData;
+        notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
